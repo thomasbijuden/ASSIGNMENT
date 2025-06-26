@@ -43,33 +43,6 @@ rules:
   - action: action_escalate_to_human
   wait_for_user_input: false 
 
-# - rule: Human Escalation During Order Tracking
-#   condition:
-#     - active_loop: order_tracking_form
-#   steps:
-#   - intent: escalate_to_human
-#   - action: action_escalate_to_human
-
-# - rule: Human Escalation During search
-#   condition:
-#     - active_loop: search_form
-#   steps:
-#   - intent: escalate_to_human
-#   - action: action_escalate_to_human
-
-# - rule: Human Escalation During complaint
-#   condition:
-#     - active_loop: complaint_form
-#   steps:
-#   - intent: escalate_to_human
-#   - action: action_escalate_to_human
-
-# - rule: Human Escalation During recommendation
-#   condition:
-#     - active_loop: recommendation_form
-#   steps:
-#   - intent: escalate_to_human
-#   - action: action_escalate_to_human
 
 - rule: Activate order tracking form
   steps:
@@ -119,24 +92,6 @@ rules:
     - requested_slot: null
   - action: action_lodge_complaint
 
-# - rule: Activate search form when needed
-#   # condition:
-#   # - slot_was_set:
-#   #   - search_query: null
-#   steps:
-#   - intent: search_products
-#   - action: search_form
-#   - active_loop: search_form
-
-# - rule: Submit search form
-#   condition:
-#   - active_loop: search_form
-#   steps:
-#   - action: search_form
-#   - active_loop: null
-#   - slot_was_set:
-#     - requested_slot: null
-#   - action: action_search_products
 
 - rule: Handle fallback
   steps:
