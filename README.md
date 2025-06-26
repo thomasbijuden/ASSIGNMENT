@@ -6,7 +6,7 @@ This project combines a Rasa-powered earphones chatbot with a Reflex frontend. I
 
 .\
 ├── data/\
-│ └── earphones_store.db # Database file \(auto-generated)
+│ └── earphones_store.db # Database file (auto-generated)\
 ├── earphones_chatbot/ # Rasa chatbot core\
 │ ├── actions/\
 │ ├── data/\
