@@ -163,27 +163,7 @@ nlu:
     - Couldn't find [rare product](search_term)
     - Zero matches for [nonexistent thing](search_term)
 
-###
-# - intent: search_products
-#   examples: |
-#     - I want to search for headphones
-#     - show me earphones
-#     - search for [Sony](brand) headphones
-#     - I'm looking for [Apple](brand) earphones
-#     - find me [wireless](feature) headphones
-#     - search [noise-cancelling](feature) earphones
-#     - show [Bose](brand) products
-#     - I need [over-ear](product_type) headphones
-#     - looking for [in-ear](product_type) earphones
-#     - search for earphones
-#     - find headphones
-#     - show me products
-#     - what earphones do you have
-#     - I want to buy headphones
-#     - search for [Sennheiser](brand)
-#     - find [premium](feature) earphones
-#     - show [budget](feature) headphones
-#     - search [JBL](brand) earphones
+
 - intent: get_recommendations
   examples: |
     - recommend me earphones
