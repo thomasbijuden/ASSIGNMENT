@@ -24,7 +24,6 @@ intents:
 - provide_complaint_details
 - provide_email
 - provide_order_id
-# - search_products
 - track_order
 - escalate_to_human
 
@@ -130,24 +129,7 @@ slots:
       conditions:
       - active_loop: complaint_form
         requested_slot: complaint_description
-  # search_query:
-  #   type: text
-  #   influence_conversation: false
-  #   mappings:
-  #   - type: from_text
-  #     conditions:
-  #     - active_loop: search_form
-  #       requested_slot: search_query
-  # escalate_to_human:
-  #   type: bool
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: from_intent
-  #     intent: escalate_to_human
-  #     value: true
-  #   - type: from_intent
-  #     intent: escalate_to_human
-  #     value: false
+  
 responses:
   utter_greet:
   - text: Hello! Welcome to our Earphones Store! 🎧 How can I help you today?
@@ -239,35 +221,6 @@ forms:
     - complaint_topic
     - complaint_description
 
-  # order_tracking_form:
-  #   required_slots:
-  #     order_id:
-  #       - type: from_entity
-  #         entity: order_id
-  #       - type: from_text   # Add explicit prompt
-  #     user_email:
-  #       - type: from_entity
-  #         entity: email
-  #       - type: from_text   # Add explicit prompt
-
-  # complaint_form:
-  #   required_slots:
-  #     complaint_topic:
-  #       - type: from_entity
-  #         entity: complaint_topic
-  #       - type: from_text
-  #     complaint_description:
-  #       - type: from_entity
-  #         entity: complaint_description
-  #       - type: from_text
-  #     order_id:
-  #       - type: from_entity
-  #         entity: order_id
-  #       - type: from_text   # Add explicit prompt
-  #     user_email:
-  #       - type: from_entity
-  #         entity: email
-  #       - type: from_text   # Add explicit prompt
         
   
   recommendation_form:
@@ -277,9 +230,7 @@ forms:
     - product_type
     - features
 
-  # search_form:
-  #   required_slots:
-  #   - search_query
+  
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
