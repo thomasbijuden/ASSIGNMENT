@@ -1,0 +1,9 @@
+# Endpoints configuration for Earphones Store Chatbot
+
+# Action server endpoint
+action_endpoint:
+  url: "http://localhost:5055/webhook"
+
+# Core endpoint for Rasa server
+rasa:
+  url: "http://localhost:5005"

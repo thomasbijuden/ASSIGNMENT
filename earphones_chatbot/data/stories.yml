@@ -1,0 +1,390 @@
+version: "3.1"
+
+stories:
+
+- story: successful product search
+  steps:
+  - intent: initiate_search
+  - action: utter_ask_search_term
+  - intent: provide_search_term
+    entities:
+    - search_term: "wireless headphones"
+  - action: action_search_products
+
+- story: search refinement
+  steps:
+  - intent: initiate_search
+  - action: utter_ask_search_term
+  - intent: provide_search_term
+    entities:
+    - search_term: "earbuds"
+  - action: action_search_products
+  - intent: refine_search
+    entities:
+    - search_term: "sports"
+  - action: action_search_products
+
+- story: multiple search attempts
+  steps:
+  - intent: initiate_search
+  - action: utter_ask_search_term
+  - intent: provide_search_term
+    entities:
+    - search_term: "xyzabc"
+  - action: action_search_products
+  - intent: provide_search_term
+    entities:
+    - search_term: "audio"
+  - action: action_search_products
+
+
+- story: no results scenario
+  steps:
+  - intent: initiate_search
+  - action: utter_ask_search_term
+  - intent: no_results_feedback
+    entities:
+    - search_term: "nonexistent product"
+  - action: action_search_products
+
+
+# - story: happy path - greet and search products
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: search_products
+#   - action: search_form
+#   - active_loop: search_form
+#   # - action: action_search_products
+
+- story: happy path - greet and get recommendations
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: get_recommendations
+  - action: recommendation_form
+  - active_loop: recommendation_form
+  - slot_was_set:
+    - requested_slot: preferred_brand
+  - intent: inform_preferences
+    entities:
+    - brand: "Sony"
+  - slot_was_set:
+    - preferred_brand: "Sony"
+  - slot_was_set:
+    - requested_slot: price_range
+  - intent: inform_preferences
+    entities:
+    - price_range: "$200-$400"
+  - slot_was_set:
+    - price_range: "$200-$400"
+  - slot_was_set:
+    - requested_slot: product_type
+  - intent: inform_preferences
+    entities:
+    - product_type: "over-ear"
+  - slot_was_set:
+    - product_type: "over-ear"
+  - slot_was_set:
+    - requested_slot: features
+  - intent: inform_preferences
+    entities:
+    - feature: "wireless"
+  - slot_was_set:
+    - features: "wireless"
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_get_recommendations
+
+- story: track order happy path UPDATED
+  steps:
+  - intent: track_order
+  - action: order_tracking_form
+  - active_loop: order_tracking_form
+  - slot_was_set:
+    - requested_slot: order_id
+  # - action: utter_ask_order_id
+  - intent: provide_order_id
+    entities:
+    - order_id: "12345"
+  - slot_was_set:
+    - order_id: "12345"
+  - slot_was_set:
+    - requested_slot: user_email
+  - action: utter_ask_email 
+  - intent: provide_email
+    entities:
+    - email: "john@example.com"
+  - slot_was_set:
+    - user_email: "john@example.com"
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_track_order
+
+- story: lodge complaint happy path
+  steps:
+  - intent: lodge_complaint
+  - action: complaint_form
+  - active_loop: complaint_form
+  - slot_was_set:
+    - requested_slot: order_id
+  - intent: provide_order_id
+    entities:
+    - order_id: "12345"
+  - slot_was_set:
+    - order_id: "12345"
+  - slot_was_set:
+    - requested_slot: user_email
+  - intent: provide_email
+    entities:
+    - email: "john@example.com"
+  - slot_was_set:
+    - user_email: "john@example.com"
+  - slot_was_set:
+    - requested_slot: complaint_topic
+  - intent: inform_preferences
+    entities:
+    - complaint_topic: "Product Quality"
+  - slot_was_set:
+    - complaint_topic: "Product Quality"
+  - slot_was_set:
+    - requested_slot: complaint_description
+  - intent: provide_complaint_details
+    entities:
+    - complaint_description: "The headphones have crackling sound"
+  - slot_was_set:
+    - complaint_description: "The headphones have crackling sound"
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_lodge_complaint
+
+- story: escalate to human
+  steps:
+  - intent: escalate_to_human
+  - action: action_escalate_to_human
+
+- story: greet and goodbye
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: bot challenge
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+# - story: search products with specific brand
+#   steps:
+#   - intent: search_products
+#     entities:
+#     - brand: "Apple"
+#   - slot_was_set:
+#     - preferred_brand: "Apple"
+#   - action: search_form
+#   - action: action_search_products
+
+# - story: search products with feature
+#   steps:
+#   - intent: search_products
+#     entities:
+#     - feature: "wireless"
+#   - slot_was_set:
+#     - features: "wireless"
+#   - action: search_form
+#   - active_loop: search_form
+
+- story: ask store information
+  steps:
+  - intent: ask_store_hours
+  - action: utter_store_hours
+
+- story: ask return policy
+  steps:
+  - intent: ask_return_policy
+  - action: utter_return_policy
+
+- story: ask shipping info
+  steps:
+  - intent: ask_shipping_info
+  - action: utter_shipping_info
+
+- story: simple recommendation without form
+  steps:
+  - intent: get_recommendations
+    entities:
+    - brand: "Sony"
+    - price_range: "$200-$400"
+  - slot_was_set:
+    - preferred_brand: "Sony"
+    - price_range: "$200-$400"
+  - action: recommendation_form
+  - active_loop: recommendation_form
+
+- story: direct order tracking with entities
+  steps:
+  - intent: track_order
+    entities:
+    - order_id: "12345"
+  - slot_was_set:
+    - order_id: "12345"
+  - action: order_tracking_form
+  - active_loop: order_tracking_form
+  - slot_was_set:
+    - requested_slot: user_email
+  # - action: utter_ask_email
+  - intent: provide_email
+    entities:
+    - email: "user@email.com"
+  - slot_was_set:
+    - user_email: "user@email.com"
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_track_order
+
+- story: complaint escalation
+  steps:
+  - intent: lodge_complaint
+  - action: complaint_form
+  - active_loop: complaint_form
+  - slot_was_set:
+    - requested_slot: order_id
+  - intent: escalate_to_human
+  - action: action_escalate_to_human
+  - active_loop: null
+
+- story: user mood great
+  steps:
+  - intent: mood_great
+  - action: utter_happy
+
+- story: user mood unhappy
+  steps:
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+
+- story: out of scope
+  steps:
+  - intent: out_of_scope
+  - action: utter_please_rephrase
+
+# - story: product search form usage
+#   steps:
+#   - intent: search_products
+#   - action: search_form
+#   - active_loop: search_form
+#   - slot_was_set:
+#     - requested_slot: search_query
+#   - intent: inform_preferences
+#   - slot_was_set:
+#     - search_query: "wireless earphones"
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
+#   - action: action_search_products
+
+- story: recommendation with denial
+  steps:
+  - intent: get_recommendations
+  - action: recommendation_form
+  - active_loop: recommendation_form
+  - slot_was_set:
+    - requested_slot: preferred_brand
+  - intent: deny
+  - action: utter_ask_preferred_brand
+  - intent: inform_preferences
+    entities:
+    - brand: "any"
+  - slot_was_set:
+    - preferred_brand: "any"
+  - slot_was_set:
+    - requested_slot: price_range
+  - intent: inform_preferences
+    entities:
+    - price_range: "under $100"
+  - slot_was_set:
+    - price_range: "under $100"
+  - slot_was_set:
+    - requested_slot: product_type
+  - intent: inform_preferences
+    entities:
+    - product_type: "any"
+  - slot_was_set:
+    - product_type: "any"
+  - slot_was_set:
+    - requested_slot: features
+  - intent: inform_preferences
+    entities:
+    - feature: "budget"
+  - slot_was_set:
+    - features: "budget"
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_get_recommendations
+
+# - story: helpful conversation flow
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: search_products
+#   - action: search_form
+#   - active_loop: search_form
+#   # - action: action_search_products
+#   - intent: ask_product_details
+#   - action: utter_search_help
+#   - intent: get_recommendations
+#   - action: recommendation_form
+#   - active_loop: recommendation_form
+#   # - action: action_get_recommendations
+#   - intent: affirm
+#   - action: utter_happy
+#   - intent: goodbye
+#   - action: utter_goodbye
+
+
+
+- story: Tracking order
+  steps:
+  - intent: track_order
+  - action: order_tracking_form
+  - active_loop: order_tracking_form
+  - slot_was_set:
+    - requested_slot: order_id
+  # - action: utter_ask_order_id
+  - intent: provide_order_id
+    entities:
+    - order_id: '111111'
+  - slot_was_set:
+    - order_id: '111111'
+  - slot_was_set:
+    - requested_slot: user_email
+  - action: utter_ask_email
+  - intent: provide_email
+    entities:
+    - email: john.doe@email.com  
+  - slot_was_set:
+    - user_email: john.doe@email.com
+  - action: action_track_order
+  # - slot_was_set:
+  #   - order_id: null
+  # - slot_was_set:
+  #   - user_email: null
+
+- story: tracking order simple
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: track_order
+  - action: order_tracking_form
+  - active_loop: order_tracking_form
+  - active_loop: null
+  - action: action_track_order
+  - intent: goodbye
+  - action: utter_goodbye

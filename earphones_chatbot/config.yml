@@ -1,0 +1,48 @@
+# Rasa 3.6.21 Configuration for Earphones Store Chatbot
+version: '3.1'
+
+# Recipe
+recipe: default.v1
+
+# Language
+language: en
+
+# NLU Pipeline Configuration
+pipeline:
+  - name: WhitespaceTokenizer # Created basic word tokens using whitespace as seperator
+  - name: RegexFeaturizer # Used to identify structured patterns, in cour case order_id email etc
+  - name: LexicalSyntacticFeaturizer # Distinguishes product names as it can detect features based on capitalisation etc
+  - name: CountVectorsFeaturizer # Creates BoW representations to capture word frequencies
+  - name: CountVectorsFeaturizer # This is the same as aboce but for sub-words(e.g: buds for us)
+    analyzer: char_wb
+    min_ngram: 1
+    max_ngram: 4
+  - name: DIETClassifier # main component that classifies intent and recognises entities (Dual Intent Entity Transformer)
+    epochs: 100
+    constrain_similarities: true # Prevents DIET from overconfident predictions
+  - name: EntitySynonymMapper # Entity variants are mapped to canonical forms (earbuds -> earphones)
+  - name: ResponseSelector # handles retrieval intents (useful for our forms)
+    epochs: 100
+    constrain_similarities: true
+  - name: FallbackClassifier # Does the fallback to prevent bot from just being stuck due to low or no confidence
+    threshold: 0.3 # top intent confidence < 30%
+    ambiguity_threshold: 0.1 # and difference between top 2 intents < 10% 
+                              # i.e not much confidence and not much difference between intents
+
+# Core Policy Configuration
+policies:
+  - name: MemoizationPolicy # Memoizes training story's dialog path for fast rule based matching
+  - name: RulePolicy # For explicit conversation rule
+    core_fallback_threshold: 0.3 # Same as fallback classifier
+    core_fallback_action_name: "action_default_fallback" # default handler for fallback
+    check_for_contradictions: true # For conflict resolution between rules and stories ... a lot
+  - name: UnexpecTEDIntentPolicy # experimental now but can identity unexpected user input mid conversation
+    max_history: 5 # Over the last 5 dialog turns
+    epochs: 100
+  - name: TEDPolicy # Transformer-based policy for dialog, same parameters as above for balanced training
+    max_history: 5
+    epochs: 100
+    constrain_similarities: true
+
+# Assistant ID
+assistant_id: earphones_store_chatbot

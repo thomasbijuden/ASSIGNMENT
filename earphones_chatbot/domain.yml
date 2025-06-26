@@ -1,0 +1,285 @@
+version: '3.1'
+intents:
+- affirm
+- ask_product_details
+- ask_return_policy
+- ask_shipping_info
+- ask_store_hours
+- bot_challenge
+- deny
+############################
+- initiate_search
+- provide_search_term
+- refine_search
+- no_results_feedback
+############################
+- get_recommendations
+- goodbye
+- greet
+- inform_preferences
+- lodge_complaint
+- mood_great
+- mood_unhappy
+- out_of_scope
+- provide_complaint_details
+- provide_email
+- provide_order_id
+# - search_products
+- track_order
+- escalate_to_human
+
+
+entities:
+- search_term
+#########################################
+- order_id
+- email
+- brand
+- price_range
+- product_type
+- feature
+- complaint_topic
+- product_name
+slots:
+  search_term:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: search_term
+##############################################
+  user_email:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: email
+    - type: from_text
+      conditions:
+      - active_loop: order_tracking_form
+        requested_slot: user_email
+      - active_loop: complaint_form
+        requested_slot: user_email
+  order_id:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: order_id
+    - type: from_text
+      conditions:
+      - active_loop: order_tracking_form
+        requested_slot: order_id
+      - active_loop: complaint_form
+        requested_slot: order_id
+  preferred_brand:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: brand
+    - type: from_text
+      conditions:
+      - active_loop: recommendation_form
+        requested_slot: preferred_brand
+  price_range:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: price_range
+    - type: from_text
+      conditions:
+      - active_loop: recommendation_form
+        requested_slot: price_range
+  product_type:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: product_type
+    - type: from_text
+      conditions:
+      - active_loop: recommendation_form
+        requested_slot: product_type
+  features:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: feature
+    - type: from_text
+      conditions:
+      - active_loop: recommendation_form
+        requested_slot: features
+  complaint_topic:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: complaint_topic
+    - type: from_text
+      conditions:
+      - active_loop: complaint_form
+        requested_slot: complaint_topic
+  complaint_description:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: complaint_form
+        requested_slot: complaint_description
+  # search_query:
+  #   type: text
+  #   influence_conversation: false
+  #   mappings:
+  #   - type: from_text
+  #     conditions:
+  #     - active_loop: search_form
+  #       requested_slot: search_query
+  # escalate_to_human:
+  #   type: bool
+  #   influence_conversation: true
+  #   mappings:
+  #   - type: from_intent
+  #     intent: escalate_to_human
+  #     value: true
+  #   - type: from_intent
+  #     intent: escalate_to_human
+  #     value: false
+responses:
+  utter_greet:
+  - text: Hello! Welcome to our Earphones Store! 🎧 How can I help you today?
+  - text: Hi there! I'm here to help you find the perfect earphones or assist with your orders. What can I do for you?
+  utter_goodbye:
+  - text: Goodbye! Thank you for choosing our Earphones Store. Have a great day! 🎧
+  - text: Thanks for visiting! Feel free to come back anytime if you need help with earphones.
+  utter_iamabot:
+  - text: I am your Earphones Store assistant bot. I can help you search products, get recommendations, track orders, and handle complaints!
+  utter_please_rephrase:
+  - text: I'm sorry, I didn't understand that. Could you please rephrase?
+  - text: I didn't catch that. Can you tell me what you'd like to do? I can help with product search, recommendations, order tracking, or complaints.
+  #############################################################
+  utter_ask_search_term:
+    - text: "What product are you looking for today?"
+    - text: "What would you like to search for?"
+    - text: "Which products are you interested in?"
+  utter_no_results:
+    - text: "No products matched your search. Try something like 'audio gear' or 'fitness equipment'?"
+    - text: "Couldn't find anything for that. Maybe try different keywords?"
+  #############################################################
+  utter_ask_email:
+  - text: Could you please provide your email address?
+  utter_ask_order_id:
+  - text: Could you please provide your order ID.
+  utter_ask_preferred_brand:
+  - text: Do you have any preferred brands? (e.g., Sony, Apple, Bose, Sennheiser)
+  utter_ask_price_range:
+  - text: What's your budget range? (e.g., under $50, $50-$200, $200-$400, over $400)
+  utter_ask_product_type:
+  - text: What type of earphones are you looking for? (e.g., over-ear, in-ear, on-ear)
+  utter_ask_features:
+  - text: Any specific features you're looking for? (e.g., wireless, noise-cancelling, premium)
+  utter_ask_search_query:
+  - text: What product would you like to search for?
+  utter_ask_complaint_topic:
+  - text: What is your complaint about? (e.g., Product Quality, Shipping, Customer Service)
+  utter_ask_complaint_description:
+  - text: Please describe your complaint in detail.
+  utter_escalate_to_human:
+  - text: I'm connecting you to a human agent now. Please wait a moment while I transfer your conversation.
+  - text: Let me get a human agent to assist you. Your conversation is being transferred to our customer service team.
+  utter_search_help:
+  - text: I can help you search for earphones! Just tell me what you're looking for, or I can recommend products based on your preferences.
+  utter_happy:
+  - text: Great, carry on!
+  utter_cheer_up:
+  - text: 'Here is something to cheer you up:'
+    image: https://i.imgur.com/wRyp3CT.jpeg
+  utter_did_that_help:
+  - text: Did that help you?
+  utter_store_hours:
+  - text: Our online store is available 24/7! For customer service, we're available Monday-Friday 9AM-6PM EST.
+  utter_return_policy:
+  - text: We offer a 30-day return policy on all earphones. Items must be in original condition with all accessories included.
+  utter_shipping_info:
+  - text: We offer free shipping on orders over $50. Standard shipping takes 3-5 business days, express shipping takes 1-2 business days.
+  utter_default_fallback:
+  - text: |-
+      I'm sorry, I didn't understand that. I can help you with:
+      • Product search
+      • Recommendations
+      • Order tracking
+      • Complaints
+      • Or connect you to a human agent
+  utter_default:
+    - text: "I'm sorry, I didn't get that. Can you rephrase?"
+actions:
+- utter_ask_email
+- action_track_order
+- action_search_products
+- action_get_recommendations
+- action_lodge_complaint
+- action_escalate_to_human
+- action_default_fallback
+- validate_order_tracking_form
+- validate_recommendation_form
+- validate_complaint_form
+- validate_search_form
+forms:
+  order_tracking_form:
+    required_slots:
+    - order_id
+    - user_email
+  complaint_form:
+    required_slots:
+    - order_id
+    - user_email
+    - complaint_topic
+    - complaint_description
+
+  # order_tracking_form:
+  #   required_slots:
+  #     order_id:
+  #       - type: from_entity
+  #         entity: order_id
+  #       - type: from_text   # Add explicit prompt
+  #     user_email:
+  #       - type: from_entity
+  #         entity: email
+  #       - type: from_text   # Add explicit prompt
+
+  # complaint_form:
+  #   required_slots:
+  #     complaint_topic:
+  #       - type: from_entity
+  #         entity: complaint_topic
+  #       - type: from_text
+  #     complaint_description:
+  #       - type: from_entity
+  #         entity: complaint_description
+  #       - type: from_text
+  #     order_id:
+  #       - type: from_entity
+  #         entity: order_id
+  #       - type: from_text   # Add explicit prompt
+  #     user_email:
+  #       - type: from_entity
+  #         entity: email
+  #       - type: from_text   # Add explicit prompt
+        
+  
+  recommendation_form:
+    required_slots:
+    - preferred_brand
+    - price_range
+    - product_type
+    - features
+
+  # search_form:
+  #   required_slots:
+  #   - search_query
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

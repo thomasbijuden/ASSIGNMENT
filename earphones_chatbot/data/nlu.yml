@@ -1,0 +1,352 @@
+version: "3.1"
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - hi there
+    - welcome
+    - howdy
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - thank you goodbye
+    - thanks bye
+    - exit
+    - quit
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+    - yes please
+    - yep
+    - yeah
+    - right
+    - absolutely
+    - sure
+    - ok
+    - okay
+    - perfect
+    - sounds good
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+    - nope
+    - nah
+    - not interested
+    - no thanks
+    - no thank you
+- intent: mood_great
+  examples: |
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+    - excellent
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremly sad
+    - so saad
+    - so sad
+    - frustrated
+    - angry
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - who are you?
+    - what are you?
+
+### For search term
+- intent: initiate_search
+  examples: |
+    - I want to find products
+    - Show me available items
+    - What products do you have?
+    - Let me see your inventory
+    - Can you help me find something?
+    - I need to search for products
+    - What's available for purchase?
+    - Show me your catalog
+    - I'm looking for something
+    - Browse products
+
+- intent: provide_search_term
+  examples: |
+    - [wireless headphones](search_term)
+    - [Samsung Galaxy Buds Pro](search_term)
+    - I need [Samsung Galaxy Buds Pro](search_term)
+    - Looking for [fitness equipment](search_term)
+    - Search for [bluetooth devices](search_term)
+    - I need [Beats Studio3 Wireless](search_term)
+    - [in-ear wireless](search_term)
+    - [sports earbuds](search_term)
+    - Find me [noise cancelling](search_term)
+    - Show [Bose QuietComfort 35 headphones](search_term)
+    - Show [Samsung Galaxy Buds Pro](search_term)
+    - [noise-cancelling](search_term)
+    - [wireless earbuds](search_term)
+    - [Apple airpods](search_term)
+    - I wanna see [Apple airpods pro]
+    - [in-ear wireless](search_term)
+    - [Jabra Elite](search_term)
+
+- intent: refine_search
+  examples: |
+    - How about [cheaper options](search_term)?
+    - Show me [more affordable](search_term) ones
+    - I need [higher quality](search_term)
+    - What about [different brands](search_term)?
+    - Show me [similar products](search_term)
+    - [Better rated](search_term) options?
+    - [Different style](search_term) please
+    - [Alternative choices](search_term)
+    - [Other colors](search_term)
+    - [Smaller size](search_term)
+
+- intent: no_results_feedback
+  examples: |
+    - Nothing found for [xyzabc](search_term)
+    - No results for [obscure item](search_term)
+    - Couldn't find [rare product](search_term)
+    - Zero matches for [nonexistent thing](search_term)
+
+###
+# - intent: search_products
+#   examples: |
+#     - I want to search for headphones
+#     - show me earphones
+#     - search for [Sony](brand) headphones
+#     - I'm looking for [Apple](brand) earphones
+#     - find me [wireless](feature) headphones
+#     - search [noise-cancelling](feature) earphones
+#     - show [Bose](brand) products
+#     - I need [over-ear](product_type) headphones
+#     - looking for [in-ear](product_type) earphones
+#     - search for earphones
+#     - find headphones
+#     - show me products
+#     - what earphones do you have
+#     - I want to buy headphones
+#     - search for [Sennheiser](brand)
+#     - find [premium](feature) earphones
+#     - show [budget](feature) headphones
+#     - search [JBL](brand) earphones
+- intent: get_recommendations
+  examples: |
+    - recommend me earphones
+    - suggest headphones
+    - what do you recommend
+    - I need recommendations
+    - help me choose earphones
+    - suggest the best headphones
+    - recommend [wireless](feature) earphones
+    - suggest [Sony](brand) headphones
+    - what are the best earphones for [under $100](price_range)
+    - recommend [over-ear](product_type) headphones
+    - I want recommendations for [noise-cancelling](feature) earphones
+    - help me find good headphones
+    - what's the best for my budget
+    - suggest something good
+    - recommend based on my preferences
+    - what would you suggest
+    - help me decide
+    - I need help choosing
+- intent: track_order
+  examples: |
+    - track my order
+    - where is my order
+    - order status
+    - check order [12345](order_id)
+    - track order [67890](order_id)
+    - what's the status of my order
+    - when will my order arrive
+    - has my order shipped
+    - order tracking
+    - find my order
+    - check my delivery
+    - order update
+    - delivery status
+    - shipping status
+    - I want to track order [67890](order_id)
+    - check order status
+    - track order
+- intent: lodge_complaint
+  examples: |
+    - I have a complaint
+    - file a complaint
+    - I want to complain
+    - there's an issue with my order
+    - problem with my earphones
+    - complaint about [product quality](complaint_topic)
+    - issue with [shipping](complaint_topic)
+    - complaint about [customer service](complaint_topic)
+    - my earphones are defective
+    - wrong item delivered
+    - damaged product
+    - poor service
+    - I'm not satisfied
+    - there's a problem
+    - report an issue
+    - something is wrong
+    - defective product
+    - quality issue
+- intent: provide_complaint_details
+  examples: |
+    - The headphones have crackling sound
+    - The headphones are damages
+    - I have received the wrong items
+- intent: escalate_to_human
+  examples: |
+    - I want to talk to a human
+    - connect me to agent
+    - speak to human
+    - human agent please
+    - transfer to human
+    - I need human help
+    - talk to customer service
+    - connect to support
+    - human support
+    - speak to representative
+    - get me an agent
+    - customer service please
+    - I want human assistance
+    - escalate to human
+- intent: provide_email
+  examples: |
+    - my email is [john@example.com](email)
+    - [jane.smith@email.com](email)
+    - it's [mike.johnson@gmail.com](email)
+    - [sarah@yahoo.com](email)
+    - the email is [david.brown@outlook.com](email)
+    - my email address is [user@domain.com](email)
+    - [john.doe@email.com](email)
+- intent: provide_order_id
+  examples: |
+    - my order number is [12345](order_id)
+    - order [12345](order_id)
+    - [67890](order_id)
+    - my order id is [11111](order_id)
+    - order number [22222](order_id)
+    - it's [33333](order_id)
+    - the order id is [44444](order_id)
+    - [111111](order_id)
+- intent: inform_preferences
+  examples: |
+    - I prefer [Sony](brand)
+    - my budget is [under $100](price_range)
+    - I want [wireless](feature) earphones
+    - looking for [over-ear](product_type) headphones
+    - I need [noise-cancelling](feature) features
+    - [Apple](brand) is my preferred brand
+    - budget around [$200-$400](price_range)
+    - I like [premium](feature) quality
+    - prefer [in-ear](product_type) type
+    - [Bose](brand) products
+    - [budget](feature) friendly options
+- intent: ask_product_details
+  examples: |
+    - tell me about this product
+    - product details
+    - what are the specifications
+    - more info about this
+    - product information
+    - describe this earphone
+    - features of this product
+    - specifications please
+    - what does this include
+    - product specs
+- intent: ask_store_hours
+  examples: |
+    - what are your store hours
+    - when are you open
+    - store timings
+    - business hours
+    - when can I call
+    - operating hours
+    - what time do you close
+    - are you open now
+- intent: ask_return_policy
+  examples: |
+    - what's your return policy
+    - can I return this
+    - return information
+    - refund policy
+    - how to return
+    - exchange policy
+    - return process
+    - can I get my money back
+- intent: ask_shipping_info
+  examples: |
+    - shipping information
+    - delivery options
+    - how long does shipping take
+    - shipping cost
+    - delivery time
+    - shipping policy
+    - do you ship internationally
+    - free shipping
+- intent: out_of_scope
+  examples: |
+    - I want to order pizza
+    - what's the weather like
+    - tell me a joke
+    - how old are you
+    - what's your favorite color
+    - book a flight
+    - restaurant recommendations
+    - movie suggestions
+    - sports scores
+    - news updates

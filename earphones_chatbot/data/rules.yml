@@ -1,0 +1,144 @@
+version: "3.1"
+
+rules:
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: Product search initiation
+  steps:
+  - intent: initiate_search
+  - action: utter_ask_search_term
+
+- rule: Handle search term
+  steps:
+  - intent: provide_search_term
+  - action: action_search_products
+
+- rule: Handle search refinement
+  steps:
+  - intent: refine_search
+  - action: action_search_products
+
+######################################################################
+
+
+- rule: Escalate to human agent anytime requested
+  steps:
+  - intent: escalate_to_human
+  - action: action_escalate_to_human
+
+- rule: Human Escalation During any form
+  condition:
+    - active_loop: null
+  steps:
+  - intent: escalate_to_human
+  - action: action_escalate_to_human
+  wait_for_user_input: false 
+
+# - rule: Human Escalation During Order Tracking
+#   condition:
+#     - active_loop: order_tracking_form
+#   steps:
+#   - intent: escalate_to_human
+#   - action: action_escalate_to_human
+
+# - rule: Human Escalation During search
+#   condition:
+#     - active_loop: search_form
+#   steps:
+#   - intent: escalate_to_human
+#   - action: action_escalate_to_human
+
+# - rule: Human Escalation During complaint
+#   condition:
+#     - active_loop: complaint_form
+#   steps:
+#   - intent: escalate_to_human
+#   - action: action_escalate_to_human
+
+# - rule: Human Escalation During recommendation
+#   condition:
+#     - active_loop: recommendation_form
+#   steps:
+#   - intent: escalate_to_human
+#   - action: action_escalate_to_human
+
+- rule: Activate order tracking form
+  steps:
+  - intent: track_order
+  - action: order_tracking_form
+  - active_loop: order_tracking_form
+
+- rule: Submit order tracking form
+  condition:
+  - active_loop: order_tracking_form
+  steps:
+  - action: order_tracking_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_track_order
+
+- rule: Activate recommendation form
+  steps:
+  - intent: get_recommendations
+  - action: recommendation_form
+  - active_loop: recommendation_form
+
+- rule: Submit recommendation form
+  condition:
+  - active_loop: recommendation_form
+  steps:
+  - action: recommendation_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_get_recommendations
+
+- rule: Activate complaint form
+  steps:
+  - intent: lodge_complaint
+  - action: complaint_form
+  - active_loop: complaint_form
+
+- rule: Submit complaint form
+  condition:
+  - active_loop: complaint_form
+  steps:
+  - action: complaint_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_lodge_complaint
+
+# - rule: Activate search form when needed
+#   # condition:
+#   # - slot_was_set:
+#   #   - search_query: null
+#   steps:
+#   - intent: search_products
+#   - action: search_form
+#   - active_loop: search_form
+
+# - rule: Submit search form
+#   condition:
+#   - active_loop: search_form
+#   steps:
+#   - action: search_form
+#   - active_loop: null
+#   - slot_was_set:
+#     - requested_slot: null
+#   - action: action_search_products
+
+- rule: Handle fallback
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default_fallback

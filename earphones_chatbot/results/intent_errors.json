@@ -1,0 +1,10 @@
+[
+  {
+    "text": "my order number is 12345",
+    "intent": "track_order",
+    "intent_prediction": {
+      "name": "provide_order_id",
+      "confidence": 0.9356397390365601
+    }
+  }
+]

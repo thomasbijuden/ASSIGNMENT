@@ -1,0 +1,75 @@
+version: "3.1"
+
+stories:
+
+- story: test greet and search
+  steps:
+  - user: |
+      hello
+    intent: greet
+  - action: utter_greet
+  - user: |
+      I want to search for Sony headphones
+    intent: search_products
+    entities:
+    - brand: "Sony"
+  - action: action_search_products
+
+- story: test order tracking
+  steps:
+  - user: |
+      track my order 12345
+    intent: track_order
+    entities:
+    - order_id: "12345"
+  - action: order_tracking_form
+  - active_loop: order_tracking_form
+  - user: |
+      john.doe@email.com
+    intent: provide_email
+    entities:
+    - email: "john.doe@email.com"
+  - action: order_tracking_form
+  - active_loop: null
+  - action: action_track_order
+
+- story: test escalation
+  steps:
+  - user: |
+      I want to speak to a human
+    intent: escalate_to_human
+  - action: action_escalate_to_human
+
+- story: test recommendations
+  steps:
+  - user: |
+      recommend me earphones
+    intent: get_recommendations
+  - action: recommendation_form
+  - active_loop: recommendation_form
+  - user: |
+      Sony
+    intent: inform_preferences
+    entities:
+    - brand: "Sony"
+  - action: recommendation_form
+  - user: |
+      $200-$400
+    intent: inform_preferences
+    entities:
+    - price_range: "$200-$400"
+  - action: recommendation_form
+  - user: |
+      over-ear
+    intent: inform_preferences
+    entities:
+    - product_type: "over-ear"
+  - action: recommendation_form
+  - user: |
+      wireless
+    intent: inform_preferences
+    entities:
+    - feature: "wireless"
+  - action: recommendation_form
+  - active_loop: null
+  - action: action_get_recommendations
